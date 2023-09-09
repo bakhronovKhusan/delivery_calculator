@@ -9,14 +9,14 @@ use Core\Controller;
 
 class indexController extends Controller
 {
-    public function add()
+    public function add($params)
     {
 //        FOR service Mosk
         $deliveryFast = new DeliveryCalculator(new MockFastDeliveryService());
-        $result['fast'] = $deliveryFast->calculateDeliveryCostAndDate('Piter','Maskva',12);
+        $result['fast'] = $deliveryFast->calculateDeliveryCostAndDate($params['sourceKladr'],$params['targetKladr'],$params['weight']);
 
         $deliverySlow = new DeliveryCalculator(new MockSlowDeliveryService());
-        $result['slow'] = $deliverySlow->calculateDeliveryCostAndDate('Piter','Maskva',12);
+        $result['slow'] = $deliverySlow->calculateDeliveryCostAndDate($params['sourceKladr'],$params['targetKladr'],$params['weight']);
 
         return json_encode($result);
     }
